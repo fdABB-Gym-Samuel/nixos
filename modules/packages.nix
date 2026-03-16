@@ -10,6 +10,8 @@
     wl-clipboard
 
     neovim
+
+    hyprpaper
   ];
 
   programs.hyprland.enable = true;

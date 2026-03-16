@@ -4,7 +4,7 @@
   ...
 }: {
   wayland.windowManager.hyprland.enable = true;
-  wayalnd.windowManager.hyprland.settigns = {
+  wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
     "$terminal" = "kitty";
     "$browser" = "firefox";
@@ -17,11 +17,15 @@
     "$signal" = "signal-desktop";
     "$lock" = "hyprlock";
 
-    monitor = ["HDMI-A-1, preferred,0x0, 1"];
+    monitor = ["eDP-1, preferred,0x0, 1"];
+
+    exec-once = [
+      "/home/zilch/.config/nixos/util_scripts/hyprpaper_iterator.sh eDP-1 --current"
+    ];
 
     general = {
       gaps_in = 10;
-      gaps_out = 50;
+      gaps_out = 30;
       border_size = 2;
 
       "col.active_border" = "rgba(780fadff)";
@@ -31,7 +35,7 @@
 
       allow_tearing = false;
 
-      layout = dwindle;
+      layout = "dwindle";
     };
 
     decoration = {
@@ -84,12 +88,12 @@
       sensitivity = 0;
 
       touchpad = {
-        natural_scroll = false;
+        natural_scroll = true;
       };
     };
 
     device = {
-      name = epic-mouse-v1;
+      name = "epic-mouse-v1";
       sensitivity = -0.5;
     };
 
@@ -98,7 +102,7 @@
       "$mainMod, B, exec, $browser"
       "$mainMod, F, exec, $fileManager"
       "$mainMod, Return, exec, $menu"
-      "$UPER, N, exec, swaync-client -t -sw"
+      "$SUPER, N, exec, swaync-client -t -sw"
       "$mainMod, G, exec, steam"
       "$mainMod, S, exec, $music"
       "$mainMod, P, exec, $signal"
@@ -164,14 +168,10 @@
       "$mainMod SHIFT, KP_Prior, movetoworkspace, 9"
       "$mainMod SHIFT, KP_Insert, movetoworkspace, 10"
 
-      "$mainMod SHIFT, Left, movecurrentworkspacetomonitor, l"
-      "$mainMod SHIFT, Right, movecurrentworkspacetomonitor, r"
+      #"$mainMod SHIFT, Left, movecurrentworkspacetomonitor, l"
+      #"$mainMod SHIFT, Right, movecurrentworkspacetomonitor, r"
 
-      "SHIFT CTRL ALT, Right, exec, ~/projects/dotfiles/bash/hyprpaper_iterator.sh"
-      "CONTROL ALT, Right, exec, ~/projects/dotfiles/bash/hyprpaper_iterator.sh HDMI-A-1"
-
-      "$mainMod, S, togglespecialworkspace, magic"
-      "$mainMod SHIFT, S, movetoworkspace, special:magic"
+      "SHIFT CTRL ALT, Right, exec, $HOME/.config/nixos/util_scripts/hyprpaper_iterator.sh eDP-1"
 
       "$mainMod, mouse_down, workspace, e+1"
       "$mainMod, mouse_up, workspace, e-1"
@@ -198,7 +198,33 @@
       ", XF86AudioPlay, exec, playerctl play-pause"
       ", XF86AudioPrev, exec, playerctl previous"
     ];
+
+    windowrule = [
+      "suppress_event maximize, match:class = .*"
+
+      "match:focus = false,match:class = ^$,match:title = ^$,match:xwayland = 1,match:float = 1,match:fullscreen = 0, match:pin = 0"
+
+      "workspace 1, match:class Code"
+      "workspace 2, match:class $browser"
+      "workspace 3, match:class $terminal"
+
+      "workspace 4, match:class ONLYOFFICE"
+
+      "workspace 5, match:class steam"
+
+      "workspace 5, match:class cs2"
+      "fullscreen on, match:class cs2"
+
+      "workspace 6, match:class Spotify"
+
+      "workspace 7, match:class gimp"
+      "workspace 7, match:class onlyoffice"
+
+      "workspace 8, match:class $fileManager"
+      "workspace 9, match:class signal"
+    ];
   };
 
+  services.hyprpaper.enable = true;
   programs.hyprlock.enable = true;
 }

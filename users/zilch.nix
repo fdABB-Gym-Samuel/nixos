@@ -5,6 +5,7 @@
 }: {
   imports = [
     ../home-modules/hyprland.nix
+    ../home-modules/kitty.nix
   ];
 
   home.packages = with pkgs; [
