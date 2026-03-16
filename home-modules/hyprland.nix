@@ -25,8 +25,6 @@
       border_size = 2;
 
       "col.active_border" = "rgba(780fadff)";
-      "col.active_border" = "rgba(780fadff)";
-      "col.inactive_border" = "rgba(31297a55)";
       "col.inactive_border" = "rgba(31297a55)";
 
       resize_on_border = false;
