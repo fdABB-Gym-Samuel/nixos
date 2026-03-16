@@ -1,3 +1,8 @@
-{pkgs, ...}: {
-  nix.settings.experimental-features = ["nix-command" "flakes" "pipe-operators"];
+{ pkgs, ... }:
+{
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+    "pipe-operators"
+  ];
 }

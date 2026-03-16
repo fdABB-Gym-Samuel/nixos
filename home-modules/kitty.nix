@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   programs.kitty.enable = true;
 
   programs.kitty = {

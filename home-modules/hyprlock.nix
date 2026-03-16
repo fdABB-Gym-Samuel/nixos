@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   programs.hyprlock.enable = true;
 
   programs.hyprlock.settings = {

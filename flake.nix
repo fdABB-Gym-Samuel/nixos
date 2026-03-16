@@ -5,30 +5,41 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/treefmt-nix";
+    };
   };
 
-  outputs = inputs @ {
-    nixpkgs,
-    home-manager,
-    ...
-  }: let
-    system = "x86_64-linux";
+  outputs =
+    inputs@{
+      nixpkgs,
+      home-manager,
+      treefmt-nix,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+      treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
 
-    mkUser = username: {
-      users.users.${username} = {
-        home = "/home/${username}";
-        isNormalUser = true;
-        hashedPasswordFile = "./users/${username}.hash";
-        extraGroups = ["podman"];
+      mkUser = username: shell: {
+        users.users.${username} = {
+          home = "/home/${username}";
+          isNormalUser = true;
+          hashedPasswordFile = "./users/${username}.hash";
+          extraGroups = [ "podman" ];
+          shell = shell;
+        };
+        home-manager.users.${username} = import ./users/${username}.nix;
       };
-      home-manager.users.${username} = import ./users/${username}.nix;
-    };
-    mkHost = hostname: {modules}:
-      inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
+      mkHost =
+        hostname:
+        { modules }:
+        inputs.nixpkgs.lib.nixosSystem {
+          inherit system;
 
-        modules =
-          [
+          modules = [
             ./modules/configuration.nix
             ./modules/packages.nix
             ./modules/nix.nix
@@ -39,20 +50,25 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                extraSpecialArgs = {inherit inputs;};
+                extraSpecialArgs = { inherit inputs; };
               };
             }
           ]
           ++ modules;
+        };
+    in
+    {
+      formatter.${system} = treefmtEval.config.build.wrapper;
+      checks = {
+        formatting.${system} = treefmtEval.config.build.check;
       };
-  in {
-    nixosConfigurations = {
-      Blizzard = mkHost "Blizzard" {
-        modules = [
-          ./hosts/Blizzard
-          (mkUser "zilch")
-        ];
+      nixosConfigurations = {
+        Blizzard = mkHost "Blizzard" {
+          modules = [
+            ./hosts/Blizzard
+            (mkUser "zilch" pkgs.zsh)
+          ];
+        };
       };
     };
-  };
 }

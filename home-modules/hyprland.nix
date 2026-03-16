@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
@@ -17,7 +18,7 @@
     "$signal" = "signal-desktop";
     "$lock" = "hyprlock";
 
-    monitor = ["eDP-1, preferred,0x0, 1"];
+    monitor = [ "eDP-1, preferred,0x0, 1" ];
 
     exec-once = [
       "/home/zilch/.config/nixos/util_scripts/hyprpaper_iterator.sh eDP-1 --current"
@@ -72,7 +73,8 @@
 
     misc = {
       force_default_wallpaper = -1;
-      disable_hyprland_logo = false;
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
     };
 
     cursor = {
@@ -112,6 +114,8 @@
       "$mainMod SHIFT, C, exec, $editor_conf"
       "$mainMod, X, killactive,"
       "$mainMod SHIFT ALT CTRL, M, exit,"
+
+      "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" $HOME/images/screenshots/$(date +%Y-%m-%d_%H:%M:%S).png"
 
       "$mainMod, V, togglefloating,"
       "$mainMod, R, exec, $menu"
@@ -226,5 +230,6 @@
   };
 
   services.hyprpaper.enable = true;
+  services.hyprpaper.settings.splash = false;
   programs.hyprlock.enable = true;
 }
