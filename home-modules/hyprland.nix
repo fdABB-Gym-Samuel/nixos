@@ -17,11 +17,13 @@
     "$music" = "spotify";
     "$signal" = "signal-desktop";
     "$lock" = "hyprlock";
+    "$vpn" = "protonvpn-app";
 
     monitor = [ "eDP-1, preferred,0x0, 1" ];
 
     exec-once = [
       "/home/zilch/.config/nixos/util_scripts/hyprpaper_iterator.sh eDP-1 --current"
+      "$vpn"
     ];
 
     general = {
@@ -114,6 +116,7 @@
       "$mainMod SHIFT, C, exec, $editor_conf"
       "$mainMod, X, killactive,"
       "$mainMod SHIFT ALT CTRL, M, exit,"
+      "$mainMod, I, exec, $vpn"
 
       "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" $HOME/images/screenshots/$(date +%Y-%m-%d_%H:%M:%S).png"
 
@@ -226,6 +229,8 @@
 
       "workspace 8, match:class $fileManager"
       "workspace 9, match:class signal"
+
+      "workspace special:minimize silent, match:class proton.vpn.app.gtk"
     ];
   };
 

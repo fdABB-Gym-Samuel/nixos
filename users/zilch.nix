@@ -18,6 +18,9 @@
 
     slurp
     grim
+
+    wireguard-tools
+    protonvpn-gui
   ];
 
   home.stateVersion = "26.05";
