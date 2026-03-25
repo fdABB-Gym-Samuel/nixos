@@ -4,6 +4,14 @@
   ...
 }:
 {
+  home.packages = with pkgs; [
+    libnotify
+    wl-clipboard
+    grim
+    slurp
+    playerctl
+    brightnessctl
+  ];
   wayland.windowManager.hyprland.enable = true;
   wayland.windowManager.hyprland.settings = {
     "$mainMod" = "SUPER";
@@ -118,7 +126,7 @@
       "$mainMod SHIFT ALT CTRL, M, exit,"
       "$mainMod, I, exec, $vpn"
 
-      "$mainMod SHIFT, S, exec, grim -g \"$(slurp)\" $HOME/images/screenshots/$(date +%Y-%m-%d_%H:%M:%S).png"
+      "$mainMod SHIFT, S, exec, FILE=$HOME/images/screenshots/$(date +%Y-%m-%d_%H:%M:%S).png && grim -g \"$(slurp)\" \"$FILE\" && wl-copy < \"$FILE\" && notify-send -i \"$FILE\" \"Screenshot\" \"Saved to $FILE\""
 
       "$mainMod, V, togglefloating,"
       "$mainMod, R, exec, $menu"

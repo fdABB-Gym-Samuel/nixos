@@ -27,7 +27,7 @@
         users.users.${username} = {
           home = "/home/${username}";
           isNormalUser = true;
-          hashedPasswordFile = "./users/${username}.hash";
+          hashedPasswordFile = "/home/${username}/.config/nixos/users/${username}.hash";
           extraGroups = [ "podman" ];
           shell = shell;
         };
@@ -51,6 +51,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 extraSpecialArgs = { inherit inputs; };
+                backupFileExtension = "bak";
               };
             }
           ]

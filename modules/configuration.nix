@@ -16,6 +16,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.extraModprobeConfig = ''
+    options iwlwifi disable_11ax=1
+    options iwlwifi amsdu_size=1
+    options iwlmvm power_scheme=1
+  '';
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
