@@ -27,7 +27,7 @@
     grim
 
     wireguard-tools
-    protonvpn-gui
+    proton-vpn
 
     podman
     podman-compose
