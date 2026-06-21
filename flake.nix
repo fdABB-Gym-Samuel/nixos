@@ -1,6 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -9,13 +13,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:numtide/treefmt-nix";
     };
+    nvim = {
+      url = "github:fdABB-Gym-Samuel/nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    depot = {
+      url = "git+ssh://forgejo@git.cenitly.com:18088/cenitly/depot";
+    };
   };
 
   outputs =
     inputs@{
+      self,
       nixpkgs,
+      deploy-rs,
       home-manager,
       treefmt-nix,
+      nvim,
       ...
     }:
     let
@@ -43,6 +57,10 @@
             ./modules/configuration.nix
             ./modules/packages.nix
             ./modules/nix.nix
+            ./modules/networking.nix
+            ./modules/fhs.nix
+            ./modules/openssh.nix
+            ./modules/fonts.nix
 
             home-manager.nixosModules.home-manager
             {
@@ -60,9 +78,32 @@
     in
     {
       formatter.${system} = treefmtEval.config.build.wrapper;
-      checks = {
-        formatting.${system} = treefmtEval.config.build.check;
+      checks.${system} = {
+        formatting = treefmtEval.config.build.check self;
+      }
+      // deploy-rs.lib.${system}.deployChecks self.deploy;
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          deploy-rs.packages.${system}.deploy-rs
+        ];
       };
+
+      deploy = {
+        nodes = {
+          Blizzard = {
+            hostname = "100.71.95.51";
+            magicRollback = false;
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.Blizzard;
+              sshUser = "root";
+              tempPath = "/tmp";
+              user = "root";
+            };
+          };
+        };
+      };
+
       nixosConfigurations = {
         Blizzard = mkHost "Blizzard" {
           modules = [

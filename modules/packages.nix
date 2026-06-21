@@ -1,16 +1,21 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }:
 {
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "claude-code"
+    ];
+
   environment.systemPackages = with pkgs; [
     wget
     curl
 
     wl-clipboard
-
-    neovim
 
     hyprpaper
   ];

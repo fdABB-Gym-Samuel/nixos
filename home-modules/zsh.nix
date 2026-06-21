@@ -8,6 +8,7 @@
     syntaxHighlighting.enable = true;
     shellAliases = {
       icat = "kitten icat $@";
+      cld = "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1 claude --dangerously-skip-permissions";
     };
   };
 
