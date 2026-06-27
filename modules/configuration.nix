@@ -16,11 +16,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.extraModprobeConfig = ''
-    options iwlwifi disable_11ax=1
-    options iwlwifi amsdu_size=1
-    options iwlmvm power_scheme=1
-  '';
+  #boot.extraModprobeConfig = ''
+  #  options iwlwifi disable_11ax=1
+  #  options iwlwifi amsdu_size=1
+  #  options iwlmvm power_scheme=1
+  #'';
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -47,6 +47,38 @@
     LC_PAPER = "sv_SE.UTF-8";
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
+  };
+
+  # Chinese (Pinyin) input via fcitx5. fcitx5's default toggle is Ctrl+Space,
+  # which switches between the Swedish keyboard and Pinyin. The daemon is
+  # autostarted from the Hyprland session (see home-modules/hyprland.nix).
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      # Use the Wayland text-input frontend rather than the GTK/Qt IM modules.
+      waylandFrontend = true;
+      addons = with pkgs; [ qt6Packages.fcitx5-chinese-addons ];
+      # Seed an input group containing the Swedish layout + Pinyin so Ctrl+Space
+      # works out of the box. This only seeds /etc/xdg/fcitx5/profile; once you
+      # have a ~/.config/fcitx5/profile (e.g. via fcitx5-configtool) that wins.
+      settings.inputMethod = {
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "se";
+          DefaultIM = "keyboard-se";
+        };
+        "Groups/0/Items/0" = {
+          Name = "keyboard-se";
+          Layout = "";
+        };
+        "Groups/0/Items/1" = {
+          Name = "pinyin";
+          Layout = "";
+        };
+        GroupOrder."0" = "Default";
+      };
+    };
   };
 
   # Configure keymap in X11

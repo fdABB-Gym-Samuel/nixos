@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:wiki.nixos.org)",
+      "WebFetch(domain:wiki.hypr.land)",
+      "Bash(Hyprland --version)",
+      "Bash(hyprctl version *)",
+      "Bash(nix eval *)"
+    ]
+  }
+}

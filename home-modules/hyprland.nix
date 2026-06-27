@@ -1,8 +1,34 @@
 {
   config,
   pkgs,
+  lib,
+  osConfig,
   ...
 }:
+let
+  # The hyprland config is shared across hosts, so the monitor layout is
+  # selected per-host from the NixOS hostname. `wallpaperMonitor` is the primary
+  # display the wallpaper-cycle keybind acts on; `wallpaperMonitorSecondary` is
+  # the optional second display (null on single-monitor hosts).
+  hostMonitors = {
+    NixPix = {
+      monitors = [
+        # Primary: MSI MAG272CQR (2560x1440@164.8Hz) at the origin.
+        "DP-3, 2560x1440@164.80, 0x0, 1"
+        # Secondary: MSI MAG241CR (1920x1080) to the right, tops aligned (y=0).
+        "HDMI-A-1, 1920x1080@144, 2560x0, 1"
+      ];
+      wallpaperMonitor = "DP-3";
+      wallpaperMonitorSecondary = "HDMI-A-1";
+    };
+    Blizzard = {
+      monitors = [ "eDP-1, preferred, 0x0, 0.83" ];
+      wallpaperMonitor = "eDP-1";
+      wallpaperMonitorSecondary = null;
+    };
+  };
+  host = hostMonitors.${osConfig.networking.hostName};
+in
 {
   home.packages = with pkgs; [
     libnotify
@@ -28,12 +54,19 @@
     "$lock" = "hyprlock";
     "$vpn" = "protonvpn-app";
 
-    monitor = [ "eDP-1, preferred,0x0, 0.83" ];
+    monitor = host.monitors;
 
-    exec_once = [
-      "/home/zilch/.config/nixos/util_scripts/hyprpaper_iterator.sh eDP-1 --current"
+    "exec-once" =
+    [
+      "${config.home.homeDirectory}/.config/nixos/util_scripts/hyprpaper_iterator.sh ${host.wallpaperMonitor} --current"
       "$vpn"
-    ];
+      # Chinese (Pinyin) input method daemon; toggle with Ctrl+Space.
+      "fcitx5 -d --replace"
+    ]
+    # On multi-monitor hosts, also set the secondary monitor's wallpaper at startup.
+    ++
+      lib.optional (host.wallpaperMonitorSecondary != null)
+        "${config.home.homeDirectory}/.config/nixos/util_scripts/hyprpaper_iterator.sh ${host.wallpaperMonitorSecondary} --current";
 
     general = {
       gaps_in = 10;
@@ -183,13 +216,20 @@
       "$mainMod SHIFT, KP_Prior, movetoworkspace, 9"
       "$mainMod SHIFT, KP_Insert, movetoworkspace, 10"
 
-      #"$mainMod SHIFT, Left, movecurrentworkspacetomonitor, l"
-      #"$mainMod SHIFT, Right, movecurrentworkspacetomonitor, r"
-
-      "SHIFT CTRL ALT, Right, exec, $HOME/.config/nixos/util_scripts/hyprpaper_iterator.sh eDP-1"
+      "SHIFT CTRL ALT, Right, exec, $HOME/.config/nixos/util_scripts/hyprpaper_iterator.sh ${host.wallpaperMonitor}"
 
       "$mainMod, mouse_down, workspace, e+1"
       "$mainMod, mouse_up, workspace, e-1"
+    ]
+    # On multi-monitor hosts, the same shortcut without SHIFT cycles the
+    # wallpaper on the secondary monitor.
+    ++
+      lib.optional (host.wallpaperMonitorSecondary != null)
+        "CTRL ALT, Right, exec, $HOME/.config/nixos/util_scripts/hyprpaper_iterator.sh ${host.wallpaperMonitorSecondary}"
+    # Multi-monitor only: move the current workspace to the monitor left/right.
+    ++ lib.optionals (host.wallpaperMonitorSecondary != null) [
+      "$mainMod SHIFT, left, movecurrentworkspacetomonitor, l"
+      "$mainMod SHIFT, right, movecurrentworkspacetomonitor, r"
     ];
 
     bindm = [

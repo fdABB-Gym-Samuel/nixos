@@ -42,7 +42,11 @@
           home = "/home/${username}";
           isNormalUser = true;
           hashedPasswordFile = "/home/${username}/.config/nixos/users/${username}.hash";
-          extraGroups = [ "podman" ];
+          extraGroups = [
+            "podman"
+            "wheel"
+            "networkmanager"
+          ];
           shell = shell;
         };
         home-manager.users.${username} = import ./users/${username}.nix;
@@ -69,7 +73,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 extraSpecialArgs = { inherit inputs; };
-                backupFileExtension = "bak";
+                backupFileExtension = "bak_";
               };
             }
           ]
@@ -101,6 +105,17 @@
               user = "root";
             };
           };
+          NixPix = {
+            hostname = "100.114.164.17";
+            magicRollback = false;
+            profiles.system = {
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.NixPix;
+              sshUser = "root";
+              tempPath = "/tmp";
+              user = "root";
+            };
+          };
+
         };
       };
 
@@ -109,6 +124,12 @@
           modules = [
             ./hosts/Blizzard
             (mkUser "zilch" pkgs.zsh)
+          ];
+        };
+        NixPix = mkHost "NixPix" {
+          modules = [
+            ./hosts/NixPix
+            (mkUser "regnm0ln1" pkgs.zsh)
           ];
         };
       };
