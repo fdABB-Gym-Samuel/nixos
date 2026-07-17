@@ -95,21 +95,21 @@
 
       deploy = {
         nodes = {
-          Blizzard = {
+          blizzard = {
             hostname = "100.71.95.51";
             magicRollback = false;
             profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.Blizzard;
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.blizzard;
               sshUser = "root";
               tempPath = "/tmp";
               user = "root";
             };
           };
-          NixPix = {
+          nixpix = {
             hostname = "100.114.164.17";
             magicRollback = false;
             profiles.system = {
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.NixPix;
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nixpix;
               sshUser = "root";
               tempPath = "/tmp";
               user = "root";
@@ -120,15 +120,15 @@
       };
 
       nixosConfigurations = {
-        Blizzard = mkHost "Blizzard" {
+        blizzard = mkHost "blizzard" {
           modules = [
-            ./hosts/Blizzard
+            ./hosts/blizzard
             (mkUser "zilch" pkgs.zsh)
           ];
         };
-        NixPix = mkHost "NixPix" {
+        nixpix = mkHost "nixpix" {
           modules = [
-            ./hosts/NixPix
+            ./hosts/nixpix
             (mkUser "regnm0ln1" pkgs.zsh)
           ];
         };

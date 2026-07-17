@@ -11,7 +11,7 @@ let
   # display the wallpaper-cycle keybind acts on; `wallpaperMonitorSecondary` is
   # the optional second display (null on single-monitor hosts).
   hostMonitors = {
-    NixPix = {
+    nixpix = {
       monitors = [
         # Primary: MSI MAG272CQR (2560x1440@164.8Hz) at the origin.
         "DP-3, 2560x1440@164.80, 0x0, 1"
@@ -21,7 +21,7 @@ let
       wallpaperMonitor = "DP-3";
       wallpaperMonitorSecondary = "HDMI-A-1";
     };
-    Blizzard = {
+    blizzard = {
       monitors = [ "eDP-1, preferred, 0x0, 0.83" ];
       wallpaperMonitor = "eDP-1";
       wallpaperMonitorSecondary = null;

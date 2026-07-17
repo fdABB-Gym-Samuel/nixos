@@ -48,13 +48,13 @@ in
       "image/png" = "org.gnome.Loupe.desktop";
       "image/x-adobe-dng" = "org.gnome.Loupe.desktop";
       "message/rfc822" = "org.gnome.TextEditor.desktop";
-      "text/html" = "firefox-nightly.desktop";
+      "text/html" = "firefox.desktop";
       "text/plain" = "org.gnome.TextEditor.desktop";
       "text/x-chdr" = "org.gnome.TextEditor.desktop";
-      "x-scheme-handler/about" = "firefox-nightly.desktop";
-      "x-scheme-handler/http" = "firefox-nightly.desktop";
-      "x-scheme-handler/https" = "firefox-nightly.desktop";
-      "x-scheme-handler/unknown" = "firefox-nightly.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
     };
   };
   xdg.configFile."mimeapps.list".force = true;
