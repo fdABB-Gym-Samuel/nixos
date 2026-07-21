@@ -62,6 +62,7 @@ in
       "$vpn"
       # Chinese (Pinyin) input method daemon; toggle with Ctrl+Space.
       "fcitx5 -d --replace"
+      "catppuccin-bar"
     ]
     # On multi-monitor hosts, also set the secondary monitor's wallpaper at startup.
     ++
@@ -70,7 +71,7 @@ in
 
     general = {
       gaps_in = 10;
-      gaps_out = 30;
+      gaps_out = "6, 30, 30, 30";
       border_size = 2;
 
       "col.active_border" = "rgba(780fadff)";

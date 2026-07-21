@@ -11,7 +11,7 @@
       "-d"
       "5" # danger (custom action) at 5%
       "-f"
-      "100" # notify when full
+      "0" # disable "battery full" notification (0 = off)
     ];
   };
 

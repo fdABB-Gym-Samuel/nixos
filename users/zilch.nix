@@ -17,6 +17,7 @@
     ../home-modules/swaync.nix
     ../home-modules/batsignal.nix
     ../home-modules/ssh.nix
+    ../home-modules/qsbar.nix
   ];
 
   home.packages = with pkgs; [

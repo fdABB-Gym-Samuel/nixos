@@ -17,6 +17,10 @@
       url = "github:fdABB-Gym-Samuel/nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    quickshell-bar = {
+      url = "git+ssh://git@github.com/fdABB-Gym-Samuel/qsbar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     depot = {
       url = "git+ssh://forgejo@git.cenitly.com:18088/cenitly/depot";
     };
