@@ -4,6 +4,9 @@
   lib,
   ...
 }:
+let
+  sandbox = inputs.depot.legacyPackages.${pkgs.system}.sandbox;
+in
 {
   imports = [
     ../home-modules/hyprland.nix
@@ -20,29 +23,32 @@
     ../home-modules/qsbar.nix
   ];
 
-  home.packages = with pkgs; [
-    kitty
-    firefox
-    onlyoffice-desktopeditors
+  home.packages =
+    (with pkgs; [
+      kitty
+      firefox
+      onlyoffice-desktopeditors
 
-    fastfetch
+      fastfetch
 
-    slurp
-    grim
+      slurp
+      grim
 
-    wireguard-tools
-    proton-vpn
+      wireguard-tools
+      proton-vpn
 
-    podman
-    podman-compose
+      podman
+      podman-compose
 
-    signal-desktop
+      signal-desktop
 
-    inputs.nvim.packages.${pkgs.system}.default
-    inputs.depot.packages.${pkgs.system}.sandbox.claude-code
+      inputs.nvim.packages.${pkgs.system}.default
 
-    prismlauncher
-  ];
+      prismlauncher
+    ])
+    ++ (with sandbox; [
+      claude-code
+    ]);
   home.shellAliases = {
     v = lib.mkForce "${inputs.nvim.packages.x86_64-linux.default}/bin/nvim";
   };
