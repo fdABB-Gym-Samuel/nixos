@@ -22,5 +22,6 @@
   };
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOSa5OO4f9jcq54eGrlkIR/Gphv8XElHO2YfC0g9RMhJ zilch@blizzard"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGGbKWOCC8YC8HjVy6fn/YzLS9C0HFBr99yU11ZI+2mf xilch@kunlun"
   ];
 }

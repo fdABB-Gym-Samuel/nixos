@@ -136,6 +136,12 @@
             (mkUser "regnm0ln1" pkgs.zsh)
           ];
         };
+        kunlun = mkHost "kunlun" {
+          modules = [
+            ./hosts/kunlun
+            (mkUser "xilch" pkgs.zsh)
+          ];
+        };
       };
     };
 }
