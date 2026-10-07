@@ -9,11 +9,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1786361680,
-        "narHash": "sha256-IxaZkb9rCGEZ+yGndxKXONeIEcKMzoFUsvLTB5G/caw=",
+        "lastModified": 1790635598,
+        "narHash": "sha256-MHycJ+rm2wMrhiO6emgqJUaUbhJU/AvdH8DyUVrU1dw=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "16901271e5b30b591e56f7a84f25f186fb20f3e1",
+        "rev": "cf64c8cbadd9b13ea79ba7720aa2930500f2ece7",
         "type": "github"
       },
       "original": {
@@ -31,11 +31,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1785374193,
-        "narHash": "sha256-trYsYv/mz6AYMzv+pE/bpZpAyiC4zF2RZmscmrMs6mI=",
+        "lastModified": 1790161799,
+        "narHash": "sha256-AKmeUwVVMOWxU4CxH+gQzRaK+i4S5s0+vxQ/x88Daco=",
         "ref": "refs/heads/master",
-        "rev": "f28c68c7660d3ceeaa660f0a18b0c9e1d5776a1e",
-        "revCount": 152,
+        "rev": "0c30972c08083d33b3451a2be2dab5cf7ab164f2",
+        "revCount": 158,
         "type": "git",
         "url": "ssh://forgejo@git.cenitly.com:18088/cenitly/depot"
       },
@@ -138,11 +138,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786887553,
-        "narHash": "sha256-0J8EwNSJ/2OeyuvXgfG+k5uBT1gkg0ww7VEo+14xl50=",
+        "lastModified": 1790365885,
+        "narHash": "sha256-iQ0ebhiVo64NktTnwft9hNxlFu4j5cvljVxyJaEVIP4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5bd505963717a894b02a57cdbcc00db28d9b029f",
+        "rev": "7b4c5ec4bedaf1e062bbc1bcaeddbc6bd242aa1b",
         "type": "github"
       },
       "original": {
@@ -194,11 +194,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1786862985,
-        "narHash": "sha256-FBJRXmbGXiSUDvYEbfLYRkckayyZ6SK1UEqhCrIZ2Cs=",
+        "lastModified": 1790578696,
+        "narHash": "sha256-ZoxIApko70jCdbH3l20HWXOBaT2HZd87orzd2yJ9dVE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e5bdc4a41d4c072fe1e3787eaa0320a384741d44",
+        "rev": "7a0f122f5090cf4c2ade2a13a0e229d4e19ba71f",
         "type": "github"
       },
       "original": {
@@ -215,11 +215,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775044794,
-        "narHash": "sha256-XUWRh8gCbEDVS+O7PQKBOw2MZOiCYnbcyaVZNJp3u3k=",
+        "lastModified": 1788854676,
+        "narHash": "sha256-jt4Gbd5lHSN0toyfB1AV5Hhu1eeQ0JZb69nqhJ+EE7A=",
         "owner": "fdABB-Gym-Samuel",
         "repo": "nvim",
-        "rev": "451d5844c29b2869a5b373e114bdba51d2956f17",
+        "rev": "7ab327b61c8148a83d618599de99f1f84d1040ff",
         "type": "github"
       },
       "original": {
