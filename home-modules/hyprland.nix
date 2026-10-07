@@ -26,6 +26,11 @@ let
       wallpaperMonitor = "eDP-1";
       wallpaperMonitorSecondary = null;
     };
+    kunlun = {
+      monitors = [ "eDP-1, preferred, 0x0, 1" ];
+      wallpaperMonitor = "eDP-1";
+      wallpaperMonitorSecondary = null;
+    };
   };
   host = hostMonitors.${osConfig.networking.hostName};
 in
